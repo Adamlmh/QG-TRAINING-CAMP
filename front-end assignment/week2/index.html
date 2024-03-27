@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_4482761_1mrmqkr5t0a.css">
 </head>
+
 <body>
   <div class="app">
     <div class="app_source_column">
@@ -16,33 +18,36 @@
         </div>
         <button class="icon_button iconfont icon-biji" id="addNodeButton"></button>
       </div>
-        <div class="search_field">
-          <button class="icon_button iconfont icon-sousuo"></button>
-          <input type="text" placeholder="请输入你要搜索的内容：" class="search_input">
-          <button class="icon_button iconfont icon-guanbi " ></button>
-        </div>
-        <div class="nodeList" id="nodeList">
-          <div class="nodeStatus" style="background-color: #ced9f2; ;">
-            <div class="nodeTitle" >
-              <span>JKnote 可帮助您轻松记录笔记、捕捉想法等。只需打开并写下一些想法即可。JKnote 可帮助您轻松记录笔记、捕捉想法等。只需打开并写下一些想法即可。 JKnote 可帮助您轻松记录笔记、捕捉想法等。只需打开并写下一些想法即可。</span>
-              <button class="icon_button iconfont icon-guanbi1 deleteBtn" data-index="0"></button>
-            </div>
+      <div class="search_field">
+        <button class="icon_button iconfont icon-sousuo"></button>
+        <input type="text" placeholder="请输入你要搜索的内容：" class="search_input">
+        <button class="icon_button iconfont icon-guanbi deleteSearchBtn"></button>
+      </div>
+      <div class="nodeList" id="nodeList">
+        <div class="nodeStatus" style="background-color: #ced9f2; ;">
+          <div class="nodeTitle">
+            <span>JKnote 可帮助您轻松记录笔记、捕捉想法等。只需打开并写下一些想法即可。JKnote 可帮助您轻松记录笔记、捕捉想法等。只需打开并写下一些想法即可。 JKnote
+              可帮助您轻松记录笔记、捕捉想法等。只需打开并写下一些想法即可。</span>
+            <button class="icon_button iconfont icon-guanbi1 deleteBtn" data-index="0"></button>
           </div>
-            </div>
-            </div>
+        </div>
+      </div>
+    </div>
     <div class="note_column ">
-<div class="header">
-  一个简洁的记事本，您可以随时记录您的想法。
-</div>
-<div class="note_editor">
+      <div class="header">
+        一个简洁的记事本，您可以随时记录您的想法。
+      </div>
+      <div class="note_editor">
 
-  <textarea name="note_textarea" id="note_textarea" cols="30" rows="10" class="note_textarea" placeholder="请输入笔记" spellcheck="false">欢迎使用 JKnote
+        <textarea name="note_textarea" id="note_textarea" cols="30" rows="10" class="note_textarea" placeholder="请输入笔记"
+          spellcheck="false">欢迎使用 JKnote
   
   JKnote 可帮助您轻松记录笔记、捕捉想法等。只需打开并写下一些想法即可。(请点击左上角按钮开始新建笔记)</textarea>
 
-</div>
+      </div>
     </div>
   </div>
   <script src="script.js"></script>
 </body>
+
 </html>

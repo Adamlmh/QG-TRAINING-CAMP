@@ -146,6 +146,7 @@ span {
 .highlight{
   background-color: #ced9f2;
 }
+/* 让高亮span浮动起来从而使得可以被后面被省略的文本可以被看见 */
 .float{
   float: left;
 }
