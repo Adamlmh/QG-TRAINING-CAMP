@@ -29,7 +29,7 @@ function saveNotes(){
 
 function displayNotes(){
   noteList.innerText=``
-//初始值 保留一个欢迎的笔记    要给nodeTitle绑定 因为span盒子没有nodeTitle那么大 防止点到nodeTitle
+//初始值 保留一个欢迎的笔记    要给nodeTitle绑定 因为span盒子没有nodeTitle那么大 防止点到nodeTitle 使得textarea出现undefined
 notes.forEach((note,index) => {
   const div = document.createElement('div');
   div.classList.add('nodeStatus');
@@ -91,7 +91,6 @@ noteList.addEventListener('click',function(event){
 //修改笔记
 noteList.addEventListener('click',function(event){
   const index = event.target.dataset.index;
-  console.log(index);
 editNote(index);
 HighLight()
 })
@@ -117,11 +116,18 @@ textarea.parentNode.replaceChild(newTextarea, textarea);
 //搜索笔记
 function searchNotes(keyword){
   const regex = new RegExp(keyword,'gi');
+  //span内高亮
   noteList.querySelectorAll('.nodeTitle').forEach(item =>  {
     const noteText = item.querySelector('span').textContent;
-    const highlightedText = noteText.replace(regex, match => `<span class="highlight">${match}</span>`);
+    const index = item.querySelector('span').dataset.index;
+    const highlightedText = noteText.replace(regex, match => ` <span class="highlight float" data-index="${index}">${match}</span> `);
     item.querySelector('span').innerHTML = highlightedText;
   })
+  //text area内高亮
+const textarea = document.getElementById('note_textarea');
+const text =textarea.value;
+  const highlightedText = text.replace(regex, match => `<span class="highlight">${match}</span>`);
+  textarea.innerHTML = highlightedText;
 }
 
 const search_input=document.querySelector('.search_input');

@@ -146,3 +146,6 @@ span {
 .highlight{
   background-color: #ced9f2;
 }
+.float{
+  float: left;
+}
