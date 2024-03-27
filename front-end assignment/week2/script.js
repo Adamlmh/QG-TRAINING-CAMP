@@ -29,12 +29,12 @@ function saveNotes(){
 
 function displayNotes(){
   noteList.innerText=``
-//初始值 保留一个欢迎的笔记
+//初始值 保留一个欢迎的笔记    要给nodeTitle绑定 因为span盒子没有nodeTitle那么大 防止点到nodeTitle
 notes.forEach((note,index) => {
   const div = document.createElement('div');
   div.classList.add('nodeStatus');
   div.innerHTML = `
-              <div class="nodeTitle" >
+              <div class="nodeTitle " data-index="${index}">
               <span class="${index}" data-index="${index}">${note}</span>
               <button class="icon_button iconfont icon-guanbi1 deleteBtn" data-index="${index}"></button>
             </div>
@@ -51,7 +51,6 @@ function addNote(){
     //把笔记添加到数组开头 会改变原来的数组
     saveNotes();
     displayNotes();
-    n++;
 }
 
 //删除笔记
@@ -59,29 +58,22 @@ function addNote(){
       notes.splice(index, 1);
       saveNotes();
       displayNotes();
-      n--;
     }
 
 //修改笔记内容
-//设置一个变量来跟踪上一次修改到的span是哪一个
-let n = -1;
-const note_textarea = document.getElementById('note_textarea');
-function editNote(index,n) {
-      note_textarea.value =notes[index] ;
-      if(n!==-1){
-      note_textarea.removeEventListener('input',function(){
-        notes[n] = note_textarea.value;
-      saveNotes();
-      displayNotes();
-      })
-      }
+function editNote(index) {
+      removeTextareaEventListener();
+      //获取克隆后的新textarea
+      const note_textarea = document.getElementById('note_textarea');
+      //同步笔记文本到输入框内
+      note_textarea.value=notes[index]
+      //重新绑定事件 实现实时修改笔记内容
       note_textarea.addEventListener('input',function(){
         notes[index] = note_textarea.value;
       saveNotes();
       displayNotes();
       })
-      n=index;
-//同步修改三者的内容
+
     }
 //增加笔记
 const addNodeButton = document.getElementById('addNodeButton');
@@ -100,17 +92,15 @@ noteList.addEventListener('click',function(event){
 noteList.addEventListener('click',function(event){
   const index = event.target.dataset.index;
   console.log(index);
-editNote(index,n);
+editNote(index);
 HighLight()
 })
 
 
 //移除监听事件
-
 function removeTextareaEventListener(){
 const textarea = document.getElementById('note_textarea');
-
-// 创建一个新的<textarea>元素，以替换现有的<textarea>元素
+// 创建一个新的<textarea>元素，以替换现有的<textarea>元素   将属性等全部克隆 实现移除监听事件 防止同时更改多个笔记
 const newTextarea = document.createElement('textarea');
 newTextarea.name = textarea.name;
 newTextarea.id = textarea.id;
@@ -120,11 +110,23 @@ newTextarea.className = textarea.className;
 newTextarea.placeholder = textarea.placeholder;
 newTextarea.spellcheck = textarea.spellcheck;
 newTextarea.value = textarea.value;
-
 // 将新<textarea>元素替换现有的<textarea>元素
 textarea.parentNode.replaceChild(newTextarea, textarea);
-
-
-
 }
+
+//搜索笔记
+function searchNotes(keyword){
+  const regex = new RegExp(keyword,'gi');
+  noteList.querySelectorAll('.nodeTitle').forEach(item =>  {
+    const noteText = item.querySelector('span').textContent;
+    const highlightedText = noteText.replace(regex, match => `<span class="highlight">${match}</span>`);
+    item.querySelector('span').innerHTML = highlightedText;
+  })
+}
+
+const search_input=document.querySelector('.search_input');
+search_input.addEventListener('input',function(event){
+  const keyword = event.target.value.trim();
+  searchNotes(keyword);
+})
 

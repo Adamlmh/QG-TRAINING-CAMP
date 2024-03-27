@@ -89,6 +89,7 @@ textarea:focus{
   position: relative;
   width: 380px;
   overflow: auto;
+  pointer-events: none;
 }
 .nodeStatus{
   box-sizing: border-box;
@@ -98,16 +99,19 @@ textarea:focus{
   width: 100%;
   flex: 1 1 auto;
   overflow: hidden;
-  padding: 10px 2px 5px 10px;
   border-bottom: 1px solid #dcdcde;
+  pointer-events: auto;
+  /* 实现盒子除了有笔记部分能被点击 其他部分无法被点击 防止出现undefined的bug */
 }
 .nodeTitle{
+    max-height: 66px;
   display: flex;
   flex: 1 1 auto;
   justify-content: flex-start;
   align-items: center;
   font-size: 16px;
   font-weight: bold;
+    padding: 10px 2px 5px 10px;
 }
 .header{
   width: 100%;
@@ -138,4 +142,7 @@ span {
     white-space: nowrap;
     overflow: hidden;
 /* 超出部分用...代替 */
+}
+.highlight{
+  background-color: #ced9f2;
 }
