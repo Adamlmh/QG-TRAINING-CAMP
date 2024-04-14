@@ -3,13 +3,15 @@
 // 导入所需的模块
 const User = require('../models/User');
 
-// 模拟数据库中的用户数据
-const user={
-  username:'adam',
-  password:'123456',
-  usertype:'1'
-}
-let users = [user];
+// 数据库中的用户数据
+
+let users = require('../../database/seeds/usersSeed')
+console.log(users);
+// getUsers.then(users => {
+// users.map(user=>console.log(user.username,user.password,user.usertype))
+// }).catch(err => {
+//   console.error(err);
+// });
 
 // 注册新用户
 function registerUser  (req, res)  {
