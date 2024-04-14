@@ -10,30 +10,29 @@ document.querySelector('#loginform').addEventListener('submit',function(event){
   const usertype = document.querySelector('input[name="usertype"]:checked').value
   //调用接口
   fetch("http://localhost:3000/api/auth/login",{
-    method:"GET",
+    method:"POST",
     headers:{
       "Content-Type":"aplication/json",
     },
-    // body:JSON.stringify({
-    //   username:username,
-    //   password:password,
-    //   usertype
-    // })
+    body:JSON.stringify({
+      username:username,
+      password:password,
+      usertype
+    })
   })
   .then((response) =>{
     if(response.ok){
-      //登录成功
-      alert("登录成功！");
-         const data =  response.text();
-        // 在控制台打印响应数据
-        console.log(data);
-        // 在页面上显示响应数据
-        alert(data);     
+      return response.json();
     }
     else{
       //登录失败
-      alert("登录失败，请检查后重新登录");
+      alert("该用户还未注册，请先完成注册");
     }
+  })
+  .then(data =>{
+         //登录成功
+         console.log(data);
+      alert(`${data.message}`);
   })
   setTimeout(() => {
     submitBtn.disabled =false;
