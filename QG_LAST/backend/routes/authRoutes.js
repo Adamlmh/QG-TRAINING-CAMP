@@ -1,6 +1,6 @@
 // routes/authRoutes.js
 const url = require("url");
-const  loginUser  = require('../controllers.js/authController');
+const  {loginUser,registerUser}  = require('../controllers.js/authController');
 function handleRoute(req, res) {
   const { method, url: reqUrl } = req;
   const parsedUrl = url.parse(reqUrl, true);
@@ -13,14 +13,12 @@ function handleRoute(req, res) {
     res.end();
   }
   if (method === "POST" && parsedUrl.pathname === "/api/auth/login") {
-    // 在这里处理登录逻辑
-    // 如果登录成功，可以发送一个成功的响应
     loginUser(req, res);
-    console.log("Login successful"); // 在控制台输出登录成功的信息
   } 
-  // else if (method === "GET" && parsedUrl.pathname === "/api/auth/register") {
-  //   // 在这里处理register逻辑
-  // } else {
+  else if (method === "POST" && parsedUrl.pathname === "/api/auth/register") {
+       registerUser(req, res);
+  } 
+  // else {
   //   res.writeHead(404, { "Content-Type": "text/plain" });
   //   res.end("Not Found");
   // }

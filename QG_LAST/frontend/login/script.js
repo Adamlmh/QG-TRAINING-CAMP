@@ -1,5 +1,5 @@
 
-//登录模块
+//登录注册模块
 document.querySelector('#loginform').addEventListener('submit',function(event){
   event.preventDefault(); //防止默认事件（表单直接提交）
   //禁用按钮 防止多次提交
@@ -9,7 +9,14 @@ document.querySelector('#loginform').addEventListener('submit',function(event){
   const password = document.querySelector('#password').value;
   const usertype = document.querySelector('input[name="usertype"]:checked').value
   //调用接口
-  fetch("http://localhost:3000/api/auth/login",{
+  let fetchUrl;
+  if(sign){
+    fetchUrl = "http://localhost:3000/api/auth/login";
+  }
+  else{
+    fetchUrl = "http://localhost:3000/api/auth/register";
+  }
+  fetch(fetchUrl,{
     method:"POST",
     headers:{
       "Content-Type":"aplication/json",
@@ -21,18 +28,15 @@ document.querySelector('#loginform').addEventListener('submit',function(event){
     })
   })
   .then((response) =>{
-    if(response.ok){
       return response.json();
-    }
-    else{
-      //登录失败
-      alert("该用户还未注册，请先完成注册");
-    }
   })
   .then(data =>{
-         //登录成功
-         console.log(data);
+      //登录成功
       alert(`${data.message}`);
+  })
+  .catch(()=>{
+      //网络故障
+      alert("网络故障");
   })
   setTimeout(() => {
     submitBtn.disabled =false;
