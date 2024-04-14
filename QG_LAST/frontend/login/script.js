@@ -2,32 +2,42 @@
 //登录模块
 document.querySelector('#loginform').addEventListener('submit',function(event){
   event.preventDefault(); //防止默认事件（表单直接提交）
+  //禁用按钮 防止多次提交
+  submitBtn.disabled = true;
   //获得数据
   const username = document.querySelector('#username').value;
   const password = document.querySelector('#password').value;
   const usertype = document.querySelector('input[name="usertype"]:checked').value
   //调用接口
-  fetch("http://119.91.210.79:3000/login",{
-    method:"POST",
+  fetch("http://localhost:3000/api/auth/login",{
+    method:"GET",
     headers:{
       "Content-Type":"aplication/json",
     },
-    body:JSON.stringify({
-      username:username,
-      password:password,
-      usertype
-    })
+    // body:JSON.stringify({
+    //   username:username,
+    //   password:password,
+    //   usertype
+    // })
   })
   .then((response) =>{
     if(response.ok){
       //登录成功
       alert("登录成功！");
+         const data =  response.text();
+        // 在控制台打印响应数据
+        console.log(data);
+        // 在页面上显示响应数据
+        alert(data);     
     }
     else{
       //登录失败
       alert("登录失败，请检查后重新登录");
     }
   })
+  setTimeout(() => {
+    submitBtn.disabled =false;
+  }, 2000);
 })
 
 //登录按钮active
