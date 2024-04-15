@@ -4,7 +4,7 @@
   --primary-color: #00a76f;
   /* 弹窗颜色 */
   /* 成功绿色 #CFE5DD 失败红色 #FADAD8 */
-  --alert-color:#FADAD8;
+  --alert-color:#CFE5DD;
 }
 /*css 初始化 */
 * {

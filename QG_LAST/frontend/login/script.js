@@ -28,6 +28,11 @@ document.querySelector('#loginform').addEventListener('submit',function(event){
     })
   })
   .then((response) =>{
+//改变弹窗的颜色
+    if(response.status >= 400 ){
+const root = document.documentElement;
+root.style.setProperty('--alert-color', '#FADAD8'); // 修改为红色
+    }
       return response.json();
   })
   .then(data =>{
@@ -35,6 +40,7 @@ document.querySelector('#loginform').addEventListener('submit',function(event){
       alert(`${data.message}`);
   })
   .catch(()=>{
+
       //网络故障
       alert("网络故障");
   })
