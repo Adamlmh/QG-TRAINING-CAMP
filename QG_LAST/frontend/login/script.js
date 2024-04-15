@@ -1,4 +1,6 @@
 
+//获得根节点
+const root = document.documentElement;
 //登录注册模块
 document.querySelector('#loginform').addEventListener('submit',function(event){
   event.preventDefault(); //防止默认事件（表单直接提交）
@@ -29,8 +31,8 @@ document.querySelector('#loginform').addEventListener('submit',function(event){
   })
   .then((response) =>{
 //改变弹窗的颜色
+root.style.setProperty('--alert-color', '#00a76f'); // 修改为红色
     if(response.status >= 400 ){
-const root = document.documentElement;
 root.style.setProperty('--alert-color', '#FADAD8'); // 修改为红色
     }
       return response.json();
@@ -40,7 +42,7 @@ root.style.setProperty('--alert-color', '#FADAD8'); // 修改为红色
       alert(`${data.message}`);
   })
   .catch(()=>{
-
+root.style.setProperty('--alert-color', '#FADAD8'); // 修改为红色
       //网络故障
       alert("网络故障");
   })

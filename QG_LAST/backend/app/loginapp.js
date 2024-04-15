@@ -62,10 +62,6 @@ function handleRoute(req, res) {
   else if (method === "POST" && parsedUrl.pathname === "/api/auth/register") {
        registerUser(req, res);
   } 
-  // else {
-  //   res.writeHead(404, { "Content-Type": "text/plain" });
-  //   res.end("Not Found");
-  // }
 }
 
 
@@ -83,19 +79,32 @@ function registerUser  (req, res)  {
   req.on('end',()=>{
         const { username, password,usertype } = JSON.parse(body);
      // 检查用户是否已存在
-    const existingUser = users.find(user => user.username === username);
+    const existingUser = users.find(user => user.username === username&&user.usertype === usertype);
+    let status
+    if(usertype===1){
+     status  = '用户'
+    }else{
+status = '管理员'
+    }
     if (existingUser) {
             res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: '该用户已存在噢' }));           
+            res.end(JSON.stringify({ message: `该${status}已存在噢` }));           
     } else {
-        // 创建新用户并保存到模拟数据库中
+        // 创建新用户并保存到数据库中
         const newUser = new User(username, password,usertype);
+        //定义执行的SQL语句
+        const sqlStr = 'insert into users set ?'
+        db.query(sqlStr,newUser,(err,results)=>{
+          if(err) return console.log(err.message);
+          if(results.affectedRows === 1){
+            console.log('插入成功');
+          }
+        })
         users.push(newUser);
         res.writeHead(202,{'Content-Type':'application/json'})
-        res.end(JSON.stringify({message:`注册成功,欢迎您${username}`}))
+        res.end(JSON.stringify({message:`注册成功,欢迎尊敬的${status}：${username}`}))
     }       
   })
-
 };
 
 // 用户登录
@@ -107,19 +116,26 @@ function loginUser (req, res) {
     });
     req.on('end', () => {
         const { username, password,usertype } = JSON.parse(body);
+        let status;
+        if(usertype==='1'){
+     status = '用户'
+    }else{
+status = '管理员'
+    }
+    console.log(status,username,password,usertype);
         // 检查用户是否存在并验证密码
         const user = users.find(user => user.username === username && user.password === password && user.usertype === usertype);
-        const userExist = users.find(user=>user.username===username);
+        const userExist = users.find(user=>user.username===username&&user.usertype === usertype);
         if (user) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: `登录成功，欢迎回来${username}` }));
+            res.end(JSON.stringify({ message: `登录成功，欢迎回来尊敬的${status}：${username}` }));
         } else {
           if(userExist){
             res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: '用户存在，密码错误' }));            
+            res.end(JSON.stringify({ message: `${status}存在，密码错误` }));            
           }
           else{ res.writeHead(402, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: '该用户还未注册，请先完成注册' }));}
+            res.end(JSON.stringify({ message: `该${status}还未注册，请先完成注册` }));}
         }
     });
 };
