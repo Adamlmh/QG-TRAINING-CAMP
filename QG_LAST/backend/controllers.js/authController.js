@@ -5,13 +5,24 @@ const User = require('../models/User');
 
 // 数据库中的用户数据
 
-let users = require('../../database/seeds/usersSeed')
+const getUser = require('../../database/seeds/usersSeed')
+
+let users = getUser((error,results)=>{
+  if(error){
+    console.log(error);
+  }else{
+    console.log(results);
+    return results;
+  }
+})
+console.log(813);
 console.log(users);
-// getUsers.then(users => {
-// users.map(user=>console.log(user.username,user.password,user.usertype))
-// }).catch(err => {
-//   console.error(err);
-// });
+// let users=[{
+//   username:'adam',
+//   password:'123456',
+//   usertype:'1'
+// }];
+
 
 // 注册新用户
 function registerUser  (req, res)  {
