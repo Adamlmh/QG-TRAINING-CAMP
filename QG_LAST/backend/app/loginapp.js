@@ -66,7 +66,8 @@ function handleRoute(req, res) {
 
 
  // controllers/authController.js
-
+const {generateToken,verifyToken} = require('../utils/user');
+const secretKey = 'm8F2Gf7$0lK3@uP1jR6^aS5#dH9&yT4'; // 一个长度为 32 字符的随机生成的密钥
 // 导入所需的模块
 const User = require('../models/User');
 // 数据库中的用户数据
@@ -100,9 +101,10 @@ status = '管理员'
             console.log('插入成功');
           }
         })
-        users.push(newUser);
+        //生成token
+        const token = generateToken({ username, password,usertype },secretKey);
         res.writeHead(202,{'Content-Type':'application/json'})
-        res.end(JSON.stringify({message:`注册成功,欢迎尊敬的${status}：${username}`}))
+        res.end(JSON.stringify({message:`注册成功,欢迎尊敬的${status}：${username}`,token:`${token}`}))
     }       
   })
 };
@@ -122,13 +124,13 @@ function loginUser (req, res) {
     }else{
 status = '管理员'
     }
-    console.log(status,username,password,usertype);
         // 检查用户是否存在并验证密码
         const user = users.find(user => user.username === username && user.password === password && user.usertype === usertype);
         const userExist = users.find(user=>user.username===username&&user.usertype === usertype);
         if (user) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: `登录成功，欢迎回来尊敬的${status}：${username}` }));
+            const token = generateToken({ username, password,usertype },secretKey);
+            res.end(JSON.stringify({ message: `登录成功，欢迎回来尊敬的${status}：${username}`,token:`${token}` }));
         } else {
           if(userExist){
             res.writeHead(401, { 'Content-Type': 'application/json' });
@@ -140,7 +142,6 @@ status = '管理员'
     });
 };
 
-console.log(users);
 }).catch(err => {
   console.error(err.message);
 });

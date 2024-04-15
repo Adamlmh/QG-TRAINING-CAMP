@@ -38,6 +38,8 @@ root.style.setProperty('--alert-color', '#FADAD8'); // 修改为红色
       return response.json();
   })
   .then(data =>{
+    console.log(data.token);
+    localStorage.setItem('token',data.token);
       //登录成功
       alert(`${data.message}`);
   })
