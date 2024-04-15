@@ -8,5 +8,5 @@ class User {
         this.usertype = usertype;
     }
 }
+export default User;
 
-module.exports = User;

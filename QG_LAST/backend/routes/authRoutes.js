@@ -1,6 +1,6 @@
 // routes/authRoutes.js
-const url = require("url");
-const  {loginUser,registerUser}  = require('../controllers.js/authController');
+import url from 'url';
+import {loginUser,registerUser} from '../controllers/authController.js'
 function handleRoute(req, res) {
   const { method, url: reqUrl } = req;
   const parsedUrl = url.parse(reqUrl, true);
@@ -23,5 +23,5 @@ function handleRoute(req, res) {
   //   res.end("Not Found");
   // }
 }
+export default handleRoute;
 
-module.exports = handleRoute;

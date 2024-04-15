@@ -1,7 +1,6 @@
 // 引入 http 模块
-const http = require('http');
-const url = require('url');
-const handleRoute = require('./routes/authRoutes')
+import http from 'http';
+import handleRoute from './routes/authRoutes';
 
 // 创建服务器
 const server = http.createServer((req, res) => {

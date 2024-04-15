@@ -1,5 +1,5 @@
 // 导入mysql模块
-const mysql = require('mysql');
+import mysql from 'mysql';
 
 // 建立联系
 const db = mysql.createPool({
@@ -25,10 +25,4 @@ async function getUsersFromDatabase() {
   });
 }
 
-// 调用异步函数，获取查询结果后再导出
-getUsersFromDatabase().then(users => {
-  module.exports = users;
-  console.log(users);
-}).catch(err => {
-  console.error(err.message);
-});
+export default getUsersFromDatabase;

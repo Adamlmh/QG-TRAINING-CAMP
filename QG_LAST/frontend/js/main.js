@@ -1,5 +1,4 @@
 function alert(content){
-  console.log(1);
   const alert = document.createElement('div');
   alert.className='alert';
   alert.textContent=content;

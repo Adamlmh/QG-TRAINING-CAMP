@@ -1,18 +1,22 @@
 // controllers/authController.js
 
 // 导入所需的模块
-const User = require('../models/User');
+import User from '../models/User';
 
 // 数据库中的用户数据
 
-let users = require('../../database/seeds/usersSeed')
-console.log(users);
+import getUsersFromDatabase from '../../database/seeds/usersSeed';
+
 // getUsers.then(users => {
 // users.map(user=>console.log(user.username,user.password,user.usertype))
 // }).catch(err => {
 //   console.error(err);
 // });
 
+
+const {loginUser,registerUser}=getUsersFromDatabase().then(res=>{
+  let users=res;
+console.log(users);
 // 注册新用户
 function registerUser  (req, res)  {
   let body = '';
@@ -62,4 +66,8 @@ function loginUser (req, res) {
         }
     });
 };
-module.exports = {loginUser,registerUser}
+return {loginUser,registerUser};
+})
+export default {loginUser,registerUser}
+
+
