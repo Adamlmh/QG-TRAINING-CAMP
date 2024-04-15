@@ -42,6 +42,9 @@ root.style.setProperty('--alert-color', '#FADAD8'); // 修改为红色
     localStorage.setItem('token',data.token);
       //登录成功
       alert(`${data.message}`);
+  setTimeout(() => {
+        location.href = '../home/index.html'
+  }, 2000);    
   })
   .catch(()=>{
 root.style.setProperty('--alert-color', '#FADAD8'); // 修改为红色
